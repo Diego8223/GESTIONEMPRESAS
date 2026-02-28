@@ -1,0 +1,143 @@
+@startuml
+' Estilo del diagrama
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+' Definición de la clase abstracta Empleado
+abstract class Empleado {
+    - documento: String
+    - nombre: String
+    - sueldoHora: double
+    - empresa: Empresa
+    + Empleado()
+    + Empleado(String, String, double)
+    + getDocumento(): String
+    + setDocumento(String): void
+    + getNombre(): String
+    + setNombre(String): void
+    + getSueldoHora(): double
+    + setSueldoHora(double): void
+    + getEmpresa(): Empresa
+    + setEmpresa(Empresa): void
+    + {abstract} calcularSueldo(int): double
+    + toString(): String
+}
+
+' Subclases de Empleado
+class Desarrollador {
+    + Desarrollador()
+    + Desarrollador(String, String, double)
+    + calcularSueldo(int): double
+}
+
+class GestorProyectos {
+    - area: String
+    + GestorProyectos()
+    + GestorProyectos(String, String, double, String)
+    + getArea(): String
+    + setArea(String): void
+    + calcularSueldo(int): double
+    + toString(): String
+}
+
+class Admin {
+    + Admin()
+    + Admin(String, String, double)
+    + calcularSueldo(int): double
+}
+
+' Clase Empresa
+class Empresa {
+    - nit: String
+    - nombre: String
+    - direccion: String
+    - ciudad: String
+    - empleados: ArrayList<Empleado>
+    + Empresa()
+    + Empresa(String, String, String, String)
+    + getNit(): String
+    + setNit(String): void
+    + getNombre(): String
+    + setNombre(String): void
+    + getDireccion(): String
+    + setDireccion(String): void
+    + getCiudad(): String
+    + setCiudad(String): void
+    + getEmpleados(): ArrayList<Empleado>
+    + setEmpleados(ArrayList<Empleado>): void
+    + agregarEmpleado(Empleado): void
+    + toString(): String
+}
+
+' Subclase de Empresa
+class EmpresaDesarrollo {
+    + EmpresaDesarrollo()
+    + EmpresaDesarrollo(String, String, String, String)
+}
+
+' Interfaces
+interface IOperacionEmpleado {
+    + agregarEmpleado(Empleado): void
+    + listarTodosEmpleados(): void
+    + buscarEmpleadoPorDocumento(String): Empleado
+    + calcularSueldoEmpleado(String, int): double
+    + contarEmpleadosPorEmpresa(String): int
+    + listarEmpleadosPorEmpresa(String): void
+}
+
+interface IOperacionEmpresa {
+    + agregarEmpresa(Empresa): void
+    + listarTodasEmpresas(): void
+    + buscarEmpresaPorNit(String): Empresa
+    + contarEmpleadosEnEmpresa(String): int
+    + listarEmpleadosDeEmpresa(String): void
+}
+
+' Clases de operaciones
+class OperacionEmpleado {
+    - empleados: ArrayList<Empleado>
+    + OperacionEmpleado()
+    + agregarEmpleado(Empleado): void
+    + listarTodosEmpleados(): void
+    + buscarEmpleadoPorDocumento(String): Empleado
+    + calcularSueldoEmpleado(String, int): double
+    + contarEmpleadosPorEmpresa(String): int
+    + listarEmpleadosPorEmpresa(String): void
+}
+
+class OperacionEmpresa {
+    - empresas: ArrayList<Empresa>
+    + OperacionEmpresa()
+    + agregarEmpresa(Empresa): void
+    + listarTodasEmpresas(): void
+    + buscarEmpresaPorNit(String): Empresa
+    + contarEmpleadosEnEmpresa(String): int
+    + listarEmpleadosDeEmpresa(String): void
+}
+
+' Relaciones de herencia
+Empleado <|-- Desarrollador
+Empleado <|-- GestorProyectos
+Empleado <|-- Admin
+Empresa <|-- EmpresaDesarrollo
+
+' Relaciones de implementación
+IOperacionEmpleado <|.. OperacionEmpleado
+IOperacionEmpresa <|.. OperacionEmpresa
+
+' Relaciones de asociación
+Empleado "trabaja en" --> "1" Empresa
+Empresa "tiene" --> "muchos" Empleado
+
+' Notas
+note top of Empleado : Clase abstracta\nque define la estructura\nbásica de un empleado
+
+note bottom of GestorProyectos : Tiene un bono del 10%\npor su área de gestión
+
+note bottom of Admin : Tiene un bono fijo\nde $100,000
+
+@enduml

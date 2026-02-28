@@ -1,0 +1,22 @@
+{
+    "workbench.colorTheme": "Default Light Modern",
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "plantuml.dotpath": "C:\\Program Files\\Graphviz\\bin\\dot.exe",
+    "plantuml.render": "PlantUMLServer",
+    "plantuml.server": "http://www.plantuml.com/plantuml",
+    "workbench.editor.empty.hint": "hidden",
+    "plantuml.trace.server": true,
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "terminal.integrated.env.windows": {
+        "JAVA_HOME": "C:\\Program Files\\Java\\jdk-21.0.10",
+        "PATH": "C:\\Program Files\\Java\\jdk-21.0.10\\bin;${env:PATH}"
+    }
+}
