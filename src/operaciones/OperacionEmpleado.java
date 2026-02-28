@@ -1,11 +1,11 @@
 package operaciones;
 
 import modelos.Empleado;
-import modelos.Empresa;
 import java.util.ArrayList;
 
 public class OperacionEmpleado implements IOperacionEmpleado {
     private ArrayList<Empleado> empleados;
+    private static final String ESPACIOS = "                                   "; // 35 espacios
 
     public OperacionEmpleado() {
         this.empleados = new ArrayList<>();
@@ -14,18 +14,19 @@ public class OperacionEmpleado implements IOperacionEmpleado {
     @Override
     public void agregarEmpleado(Empleado empleado) {
         empleados.add(empleado);
-        System.out.println("Empleado agregado exitosamente.");
+        System.out.println(ESPACIOS + "✅ Empleado agregado exitosamente.");
     }
 
     @Override
     public void listarTodosEmpleados() {
         if (empleados.isEmpty()) {
-            System.out.println("No hay empleados registrados.");
+            System.out.println(ESPACIOS + "📋 No hay empleados registrados.");
             return;
         }
-        System.out.println("\n=== LISTA DE EMPLEADOS ===");
+        System.out.println(ESPACIOS + "──────────────────────────────────────────────────");
         for (Empleado emp : empleados) {
-            System.out.println(emp.toString());
+            System.out.println(ESPACIOS + "  " + emp.toString());
+            System.out.println(ESPACIOS + "──────────────────────────────────────────────────");
         }
     }
 
@@ -61,16 +62,19 @@ public class OperacionEmpleado implements IOperacionEmpleado {
 
     @Override
     public void listarEmpleadosPorEmpresa(String nitEmpresa) {
-        System.out.println("\n=== EMPLEADOS DE LA EMPRESA CON NIT: " + nitEmpresa + " ===");
+        System.out.println(ESPACIOS + "══════════════════════════════════════════════");
+        System.out.println(ESPACIOS + "   EMPLEADOS DE LA EMPRESA NIT: " + nitEmpresa);
+        System.out.println(ESPACIOS + "══════════════════════════════════════════════");
         boolean encontrado = false;
         for (Empleado emp : empleados) {
             if (emp.getEmpresa() != null && emp.getEmpresa().getNit().equals(nitEmpresa)) {
-                System.out.println(emp.toString());
+                System.out.println(ESPACIOS + "  " + emp.toString());
+                System.out.println(ESPACIOS + "  ─────────────────────────────────────");
                 encontrado = true;
             }
         }
         if (!encontrado) {
-            System.out.println("No hay empleados en esta empresa o la empresa no existe.");
+            System.out.println(ESPACIOS + "  📋 No hay empleados en esta empresa.");
         }
     }
 }

@@ -1,6 +1,7 @@
 @echo off
 title GestionEmpresas - EJECUTAR
 color 0A
+chcp 65001 >nul
 
 :: Configurar Java
 set JAVA_HOME=C:\Program Files\Java\jdk-21.0.10
@@ -11,23 +12,19 @@ echo    EJECUTANDO GESTION EMPRESAS
 echo ========================================
 echo.
 
-:: Compilar si es necesario
-if not exist "bin" (
-    echo Compilando proyecto...
-    dir /s /b src\*.java > sources.txt
-    javac -d bin @sources.txt
-    del sources.txt 2>nul
-)
+:: Compilar
+echo Compilando proyecto con código centrado...
+javac -d bin src/main/Main.java src/modelos/*.java src/operaciones/*.java
 
-:: Verificar que compiló
-if not exist "bin\main\Main.class" (
+if %errorlevel% neq 0 (
     echo ❌ Error: No se pudo compilar
     pause
     exit /b
 )
 
-:: Ejecutar el programa
-echo Iniciando aplicación...
+echo ✅ Compilación exitosa
+echo.
+echo Iniciando aplicación centrada...
 echo.
 java -cp bin main.Main
 
