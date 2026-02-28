@@ -69,7 +69,6 @@ public class OperacionEmpleado implements IOperacionEmpleado {
         for (Empleado emp : empleados) {
             if (emp.getEmpresa() != null && emp.getEmpresa().getNit().equals(nitEmpresa)) {
                 System.out.println(ESPACIOS + "  " + emp.toString());
-                System.out.println(ESPACIOS + "  ─────────────────────────────────────");
                 encontrado = true;
             }
         }

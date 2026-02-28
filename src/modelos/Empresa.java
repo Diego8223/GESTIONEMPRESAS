@@ -21,7 +21,6 @@ public class Empresa {
         this.empleados = new ArrayList<>();
     }
 
-    // Getters y setters (igual que antes)
     public String getNit() { return nit; }
     public void setNit(String nit) { this.nit = nit; }
     public String getNombre() { return nombre; }

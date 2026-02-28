@@ -15,16 +15,22 @@ public class Main {
             mostrarMenuCentrado();
             opcion = leerOpcion();
             ejecutarOpcion(opcion);
+            
+            // Pausa para que el usuario vea los resultados
+            if (opcion != 10 && opcion != 0) {
+                System.out.println("\n" + " ".repeat(35) + "Presione Enter para continuar...");
+                scanner.nextLine();
+            }
         } while (opcion != 10);
         
         scanner.close();
     }
 
     private static void mostrarMenuCentrado() {
-        // Limpiar pantalla completamente
-        limpiarPantalla();
+        // Limpiar pantalla
+        for (int i = 0; i < 30; i++) System.out.println();
         
-        String espacios = "                                   "; // 35 espacios para centrar mejor
+        String espacios = "                                   "; // 35 espacios
         
         System.out.println(espacios + "╔════════════════════════════════════════════════════╗");
         System.out.println(espacios + "║         SISTEMA DE GESTIÓN DE EMPRESAS            ║");
@@ -44,19 +50,6 @@ public class Main {
         System.out.print(espacios + "   👉 Seleccione una opción: ");
     }
 
-    private static void limpiarPantalla() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            for (int i = 0; i < 50; i++) System.out.println();
-        }
-    }
-
     private static int leerOpcion() {
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -66,7 +59,7 @@ public class Main {
     }
 
     private static void ejecutarOpcion(int opcion) {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   "; // 35 espacios
         
         switch (opcion) {
             case 1:
@@ -113,7 +106,7 @@ public class Main {
     }
 
     private static void agregarEmpresa() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         AGREGAR EMPRESA");
@@ -130,11 +123,10 @@ public class Main {
 
         Empresa empresa = new EmpresaDesarrollo(nit, nombre, direccion, ciudad);
         operacionEmpresa.agregarEmpresa(empresa);
-        System.out.println(espacios + "✅ ¡Empresa agregada exitosamente!");
     }
 
     private static void buscarEmpresaPorNit() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         BUSCAR EMPRESA");
@@ -151,7 +143,7 @@ public class Main {
     }
 
     private static void agregarEmpleado() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         AGREGAR EMPLEADO");
@@ -160,7 +152,7 @@ public class Main {
         System.out.println(espacios + "📋 EMPRESAS DISPONIBLES:");
         operacionEmpresa.listarTodasEmpresas();
         
-        System.out.print(espacios + "📌 NIT empresa (o Enter para omitir): ");
+        System.out.print(espacios + "📌 NIT empresa (o Enter): ");
         String nitEmpresa = scanner.nextLine();
         
         Empresa empresa = null;
@@ -193,10 +185,10 @@ public class Main {
                 System.out.println(espacios + "✅ Desarrollador creado");
                 break;
             case 2: 
-                System.out.print(espacios + "📋 Área de gestión: ");
+                System.out.print(espacios + "📋 Área: ");
                 String area = scanner.nextLine();
                 empleado = new GestorProyectos(doc, nombre, sueldo, area);
-                System.out.println(espacios + "✅ Gestor de Proyectos creado");
+                System.out.println(espacios + "✅ Gestor creado");
                 break;
             case 3: 
                 empleado = new Admin(doc, nombre, sueldo);
@@ -212,11 +204,10 @@ public class Main {
         }
         
         operacionEmpleado.agregarEmpleado(empleado);
-        System.out.println(espacios + "✅ ¡Empleado registrado exitosamente!");
     }
 
     private static void buscarEmpleadoPorDocumento() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         BUSCAR EMPLEADO");
@@ -233,7 +224,7 @@ public class Main {
     }
 
     private static void calcularSueldoEmpleado() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         CALCULAR SUELDO");
@@ -248,7 +239,7 @@ public class Main {
             return;
         }
         
-        System.out.print(espacios + "⏱️ Horas trabajadas: ");
+        System.out.print(espacios + "⏱️ Horas: ");
         int horas = Integer.parseInt(scanner.nextLine());
         
         double sueldo = operacionEmpleado.calcularSueldoEmpleado(doc, horas);
@@ -256,21 +247,13 @@ public class Main {
         System.out.println(espacios + "──────────────────────────────────────────────────");
         System.out.println(espacios + "   Empleado: " + emp.getNombre());
         System.out.println(espacios + "   Tipo: " + emp.getClass().getSimpleName());
-        System.out.printf(espacios + "   Sueldo por hora: $%,.0f%n", emp.getSueldoHora());
-        System.out.println(espacios + "   Horas trabajadas: " + horas);
-        if (emp instanceof GestorProyectos) {
-            double base = emp.getSueldoHora() * horas;
-            double bono = base * 0.10;
-            System.out.printf(espacios + "   Bono (10%%): $%,.0f%n", bono);
-        } else if (emp instanceof Admin) {
-            System.out.println(espacios + "   Bono fijo: $100,000");
-        }
-        System.out.println(espacios + "──────────────────────────────────────────────────");
-        System.out.printf(espacios + "   💰 SUELDO TOTAL: $%,.0f%n", sueldo);
+        System.out.printf(espacios + "   Sueldo/hora: $%,.0f%n", emp.getSueldoHora());
+        System.out.println(espacios + "   Horas: " + horas);
+        System.out.printf(espacios + "   TOTAL: $%,.0f%n", sueldo);
     }
 
     private static void contarEmpleadosEnEmpresa() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         CONTAR EMPLEADOS");
@@ -280,14 +263,14 @@ public class Main {
         String nit = scanner.nextLine();
         int cantidad = operacionEmpresa.contarEmpleadosEnEmpresa(nit);
         if (cantidad != -1) {
-            System.out.println(espacios + "📊 La empresa tiene " + cantidad + " empleado(s)");
+            System.out.println(espacios + "📊 Empleados: " + cantidad);
         } else {
             System.out.println(espacios + "❌ Empresa no encontrada");
         }
     }
 
     private static void listarEmpleadosDeEmpresa() {
-        String espacios = "                                   "; // 35 espacios fijos
+        String espacios = "                                   ";
         
         System.out.println(espacios + "══════════════════════════════════════════════");
         System.out.println(espacios + "         EMPLEADOS POR EMPRESA");
